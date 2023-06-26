@@ -2,11 +2,19 @@
 ##### This project is inspired by  "Lisp in 99 lines of C.." (https://github.com/Robert-van-Engelen/tinylisp)
 
 
-#### In current project we will try to implement a subset of Clojure (https://clojure.org/), which we call *micro*Clojure
+#### In current project we will try to implement in GNU gforth (https://gforth.org/) a subset of Clojure (https://clojure.org/), which we call *micro*Clojure
 
-#### Definition of microClojure
 
- > A program, is *just* a sequence of **Lists** (defined below) *recursively*
+#### micro clojure interpeter mclj functions in
+-  repl mode
+```
+ ?> mclj
+```
+-  program exectution mode
+```
+ ?> mclj code-filename` 
+```
+
 
 #### Example 
 ##### a program, calculting the square of circle with radius 5:
@@ -14,27 +22,6 @@
 (def Pi 3.14)
 (* Pi (* 5 5))
 ```
-
-#### 'MicroClojure language consists of following kinds of components 
-```
-----------------------------------------------------------------------------------------------------------
-| Category name  |      Description                              | Representation (in javascript)        |
-----------------------------------------------------------------------------------------------------------
-| Symbol         |      name of built in function (e.g. +,*)     | javascript string: e.g. "Pi", "def"   |
-|                |      or "special form" (e.g. def, if, let)    |                                       |
-|                |      or variable (def Pi 3.14)                |                                       |
-----------------------------------------------------------------------------------------------------------
-| Number         |      literal value - "real" number            | javascript Number: e.g  3.14          |
-----------------------------------------------------------------------------------------------------------
-| Atom           |      Symbols, Numbers                         | javascript String, Number             |
-----------------------------------------------------------------------------------------------------------
-| List           |      is a sequnce of one or more Atoms/lists  | javascript arrays of:                 |
-|                |      enclosed in ( ) brackets                 | strings,numbers, arrays               |
-|                |      i.e. (Atom1/List1 Atom2/List2  .. )      |                                       |
-----------------------------------------------------------------------------------------------------------
-
-```
-
 
 #### Evaluation rules:
 ```
@@ -61,6 +48,64 @@ ex 2
 
 
 ### Implementatation of 'microClojure'
+
+ > A program, is *just* a sequence of **Lists** (defined below) *recursively*
+
+7 *primitive* operators:
+**quote**, **atom**, **eq**, **first**, **rest**, **cons**, **cond**
+
+```
+---------------
+| quote       |
+---------------
+(quote x)
+>  x
+
+---------------
+| atom        |
+---------------
+(atom (a b))
+> ()
+(atom x)
+> t
+
+---------------
+| eq          |
+---------------
+(eq a b)
+> ()
+(eq a a)
+> t
+
+---------------
+| first       |
+---------------
+(first '(a b c))
+> a
+
+---------------
+| rest        |
+---------------
+(rest '(a b c))
+> (b c)
+
+---------------
+| cons        |
+---------------
+(cons 'a '(b c))
+> (a b c)
+(cons 'a '()))
+> (a)
+
+---------------
+| cond        |
+---------------
+(cond t b )
+> b
+(cond '() b )
+> ()
+```
+
 
 #### stage 1 - parsing
 Goal: convert input text (program) into sequance of valid elements of Microclojure language

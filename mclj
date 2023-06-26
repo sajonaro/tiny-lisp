@@ -1,0 +1,14 @@
+ #!/usr/bin/env bash
+
+ if [ -z "$1" ]; then
+   printf "starting REPL mode .. \n"
+   gforth ./forth/repl.fs
+elif [[ $1 == "-h" ]]; then
+  printf "mclj is microclojure interpreter, it can operate in two modes \n\n"
+  printf "1) mclj REPL mode run: \n"
+  printf "./mclj \n"
+  printf "2) mclj program execution mode run: \n"
+  printf "./mclj program-file-name \n"
+else
+    gforth ./forth/exec.fs  $1
+fi
